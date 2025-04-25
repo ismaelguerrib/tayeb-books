@@ -42,3 +42,6 @@ Thumbs.db
 .nx/workspace-data
 
 .angular
+
+# Ignore all .env files inside apps/cms/
+apps/cms/.env*
