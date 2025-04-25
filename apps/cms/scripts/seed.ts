@@ -3,6 +3,11 @@ import { createStrapi } from '@strapi/strapi';
 
 async function seed() {
   console.log('🌱 Seeding Books with Faker...');
+  const imagePaths = [
+    '../public/uploads/duo_7c9c6a5777.jpg',
+    '../public/uploads/lumiere_561f6b2ec0.jpg',
+    '../public/uploads/portrait_f5bd2c7dc7.jpg',
+  ];
 
   try {
     const strapi = createStrapi();
@@ -35,7 +40,12 @@ async function seed() {
         Title: faker.lorem.words(3),
         Description: faker.lorem.paragraphs(2),
         Price: Number(faker.finance.amount({ min: 5, max: 50, dec: 2 })), // decimal price between 5 and 50
-        Image: '../public/uploads/duo_7c9c6a5777.jpg',
+        Image: [
+          '../public/uploads/duo_7c9c6a5777.jpg',
+          '../public/uploads/lumiere_561f6b2ec0.jpg',
+          '../public/uploads/duo_7c9c6a5777.jpg',
+          '../public/uploads/portrait_f5bd2c7dc7.jpg',
+        ],
         author: authors[Math.floor(Math.random() * authors.length)].id,
         categories: categories
           .sort(() => 0.5 - Math.random())
@@ -55,7 +65,7 @@ async function seed() {
             categories: book.categories.length
               ? { connect: book.categories.map((id) => ({ id })) }
               : undefined,
-            Image: null, // To handle later (image upload)
+            Image: imagePaths[Math.floor(Math.random() * imagePaths.length)],
           },
         });
       }
